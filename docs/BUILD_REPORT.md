@@ -15,6 +15,7 @@ The refined build is complete: the six indicators and the hazard panel work end 
 - **The hazard panel shows all 30 links** of `Hazard_Links.json`, and never changes a status.
 - **The fixed inputs are unchanged.** Nothing in `app/data/`, `reference/` or the expected statuses was edited. No threshold and no rating was changed.
 - **The browser test ran**, in Chromium. It was not skipped.
+- **A fresh clone was checked:** after `npm ci`, the same 179 tests pass.
 - **Not tested:** any browser other than Chromium, a real phone, GitHub Pages, a screen reader, and review by people. See section 4.
 - **Nobody could be asked during the build.** Where the briefs were unclear the build chose, and wrote the choice down. `docs/ISSUES.md` records 58 points in all; the 14 choices that most need confirming are in section 6.
 
@@ -96,7 +97,7 @@ Stated plainly, so nobody assumes more than was checked.
 | **The browser's own update check of `sw.js`** | When online, the browser asks the app's own address whether `sw.js` changed. The app cannot stop this. It goes to no other site and carries no data | None; recorded in `TECH_NOTES.md` |
 | **The exported CSV in a spreadsheet program** | Only read back by the tests | Open one export |
 | **Windows, and Node versions other than 22** | The checks ran on Linux with Node 22 and Python 3.13 only. `package.json` asks for Node 20 or later | Run `npm test` on the team's laptop |
-| **`npm test` without `npm install`** | Tried only for the browser test: with Playwright hidden, it was skipped cleanly with a message. The CSS rebuild check is written to skip the same way but was not run without Tailwind | Run `npm test` on a fresh clone if it matters |
+| **`npm test` on a machine with nothing installed** | Tried on a fresh clone in the cloud session, before `npm install`: 178 pass and 1 is skipped with a message (the CSS rebuild check). The browser test still ran there, because that machine has Playwright installed machine-wide. With Playwright hidden, the browser test was skipped cleanly with a message. A machine with neither was not available | Run `npm test` on the team's laptop before and after `npm install` |
 
 **About the browser test.** `tests/e2e.test.js` needs Playwright with Chromium, a development tool that is not part of the app. In the cloud session Chromium was already installed, and Playwright was installed with `npm install` at the matching version (1.63.0). Where Playwright or its browser is missing, the two browser tests are skipped with a message, and the workability, offline and on-screen rows above then have no automatic check on that machine.
 
