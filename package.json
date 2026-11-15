@@ -12,6 +12,8 @@
   "scripts": {
     "test": "node --test",
     "build:css": "tailwindcss -c tailwind.config.js -i src/input.css -o app/css/app.css --minify",
+    "stamp": "node tools/stamp_sw.mjs",
+    "build": "npm run build:css && npm run stamp",
     "contrast": "node tools/contrast.mjs",
     "check": "python reference/check.py"
   },
