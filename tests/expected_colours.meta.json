@@ -1,0 +1,15 @@
+{
+  "file": "expected_colours.csv",
+  "description": "Expected status for every demo row and indicator, from the reference checker (reference/generate_synthetic_data.py) with pattern rules applied. Synthetic data only.",
+  "generated_by": "reference/tools/expected_colours.py",
+  "ai_generation": "AI-generated (D-44): written by an AI assistant at the team leader's direction.",
+  "thresholds_version": "0.4.0",
+  "rows": 120,
+  "indicators": 6,
+  "statuses": 720,
+  "status_counts": {
+    "normal": 640,
+    "warning": 77,
+    "contact": 3
+  }
+}

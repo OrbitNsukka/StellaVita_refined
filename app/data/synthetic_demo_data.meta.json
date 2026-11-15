@@ -1,0 +1,8 @@
+{
+  "file": "synthetic_demo_data.csv",
+  "description": "Synthetic demo data: 4 fictional crew members (SYN-A to SYN-D) over 30 days. No real health records.",
+  "generated_by": "generate_synthetic_data.py, seed 2026",
+  "ai_generation": "AI-generated: drafted by an AI assistant (Claude, Anthropic) at the team leader's direction, then reviewed and signed by the team leader. Disclosed under D-44. Contains no NASA branding, logos, flags or mission identifiers.",
+  "testing": "D-50: one astronaut for basic workability checks (SYN-B suggested: it shows the three-night sleep red, the personal heart-rate range and the dizzy low-pressure morning); all four for consistency checks.",
+  "blood_pressure_note": "The CSV holds one blood-pressure reading per day: the latest one, which is the one judged (D-49)."
+}

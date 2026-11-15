@@ -1,0 +1,27 @@
+StellaVita
+Copyright 2026 OrbitNsukka
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+AI disclosure (D-44)
+The code, synthetic data and most documents in this repository were generated
+by an AI assistant (Claude, by Anthropic) at the team leader's direction, and
+reviewed and approved by the team. See docs/AI_USE.md.
+
+Sources
+Health ranges, rules and guidance in app/data/ cite their sources by ID (S-xx).
+The cited works are not part of this product. They remain the property of their
+authors and keep their own licences. No copies of them are included here.
+
+No endorsement
+NASA and other agencies are cited as sources only. This project is not
+affiliated with or endorsed by NASA or any other organisation, and it uses no
+NASA logos, flags, mission patches or mission identifiers.
+
+Data
+All health data in this repository is synthetic. It describes fictional
+astronauts and contains no real health records or personal information.
+
+Third-party libraries
+None at present. Any library added later is listed here and in
+docs/TECH_NOTES.md with its L-ID and licence (D-47).

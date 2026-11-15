@@ -1,0 +1,9 @@
+# AI-generated (D-44): written by an AI assistant at the team leader's direction.
+# Keep text files with LF line endings on every machine, so the service-worker
+# stamp and word-for-word text tests give the same result on Windows.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.ico binary
+*.pdf binary
+*.pptx binary

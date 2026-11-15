@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "name": "Hazard links v2 (proposal)",
+    "version": "0.1.0-draft",
+    "date": "2026-11-15",
+    "status": "DRAFT. Not a fixed input. Not read by the app. Needs Data & Science approval and a logged decision before it moves to app/data/.",
+    "ai_generation": "AI-generated (D-44): drafted by an AI assistant (Claude, Anthropic) at the team leader's direction. The assistant is not a source.",
+    "explained_in": "docs/data-science/Hazard_Links_Sheet_v2_Draft.md",
+    "method": {
+      "path": "Fewest arrows from the hazard node to any observed node, inside the indicator's own NASA risk diagram(s). Arrows copied from the diagram code files.",
+      "closeness_rules": {
+        "close": "1 or 2 arrows, and observability high or partial",
+        "intermediate": "3 arrows, and observability high or partial",
+        "distant": "4 or more arrows, or observability low, or a held source says the effect along this path is long-term disease",
+        "not_linked": "no path inside the indicator's own diagram(s)"
+      },
+      "evidence_grades": {
+        "E1": "a spaceflight study measured this indicator or the same body quantity",
+        "E2": "only a related marker, or only an Earth analog",
+        "E3": "no measurement in the held sources"
+      },
+      "not_meaning": "Closeness is not an effect size or a likelihood. It must never be used to say which hazard caused a reading."
+    },
+    "diagram_files_read": {
+      "S-153": "https://www.nasa.gov/wp-content/uploads/2024/07/cardio-vte-hsrb-dag-code.txt",
+      "S-154": "https://www.nasa.gov/wp-content/uploads/2025/09/sleep-risk-dag-code-sa-07566.txt",
+      "S-155": "https://www.nasa.gov/wp-content/uploads/2025/09/immune-dag-code-sa-07566.txt",
+      "S-156": "https://www.nasa.gov/wp-content/uploads/2025/09/microhost-dag-code-sa-07566.txt",
+      "S-157": "https://www.nasa.gov/wp-content/uploads/2025/09/behavioral-health-dag-code-sa-07566.txt",
+      "S-158": "https://www.nasa.gov/wp-content/uploads/2023/09/food-risk-narrative.txt",
+      "read_on": "2026-11-15, by the AI assistant; team to re-check"
+    }
+  },
+  "hazards": ["radiation", "isolation_confinement", "distance_from_earth", "altered_gravity", "hostile_closed_environment"],
+  "hazard_node_names": {
+    "radiation": "Radiation",
+    "isolation_confinement": "Isolation and Confinement",
+    "distance_from_earth": "Distance from Earth",
+    "altered_gravity": "Altered Gravity",
+    "hostile_closed_environment": "Hostile Closed Environment"
+  },
+  "indicators": {
+    "heart_rate": {
+      "diagrams": ["S-153"],
+      "observed_nodes": ["Orthostatic Intolerance", "Cardiac Structure/Function", "Vascular Structure/Function", "Intravascular Volume"],
+      "mapping_strength": "team mapping, to approve",
+      "observability": "partial",
+      "evidence": { "grade": "E1", "sources": ["S-42", "S-120"], "hazard_specific": false }
+    },
+    "blood_pressure": {
+      "diagrams": ["S-153"],
+      "observed_nodes": ["Orthostatic Intolerance", "Cardiac Structure/Function", "Vascular Structure/Function", "Intravascular Volume"],
+      "mapping_strength": "team mapping, to approve",
+      "observability": "partial",
+      "evidence": { "grade": "E1", "sources": ["S-42", "S-43"], "hazard_specific": false }
+    },
+    "blood_sugar": {
+      "diagrams": ["S-158"],
+      "observed_nodes": ["Energy (Calories)", "Nutrients"],
+      "mapping_strength": "weak: no glucose node in the diagram (S-121)",
+      "observability": "low",
+      "evidence": { "grade": "E3", "sources": ["S-144"], "hazard_specific": false }
+    },
+    "body_temperature": {
+      "diagrams": ["S-156", "S-155"],
+      "observed_nodes": ["Infection", "Medical Illness"],
+      "mapping_strength": "team mapping, to approve; fever suggests infection but is not always present (S-134)",
+      "observability": "partial",
+      "evidence": { "grade": "E1 for temperature, E2 for infection", "sources": ["S-46", "S-47", "S-49", "S-134"], "hazard_specific": false }
+    },
+    "sleep_hours": {
+      "diagrams": ["S-154"],
+      "observed_nodes": ["Sleep Deficiencies"],
+      "mapping_strength": "direct",
+      "observability": "high",
+      "evidence": { "grade": "E1", "sources": ["S-139", "S-171"], "hazard_specific": false }
+    },
+    "mood": {
+      "diagrams": ["S-157"],
+      "observed_nodes": ["Psychological Status"],
+      "mapping_strength": "team mapping, to approve; PHQ-2 is a screen (S-135)",
+      "observability": "partial",
+      "evidence": { "grade": "E2", "sources": ["S-52", "S-143"], "hazard_specific": "isolation only (S-52, Earth analog)" }
+    }
+  },
+  "links": [
+    { "hazard": "altered_gravity", "indicator": "heart_rate", "arrows": 2, "path": ["Altered Gravity", "Endocrine Factors", "Orthostatic Intolerance"], "diagram": "S-153", "closeness": "close" },
+    { "hazard": "radiation", "indicator": "heart_rate", "arrows": 2, "path": ["Radiation", "Oxidative Stress", "Vascular Structure/Function"], "diagram": "S-153", "closeness": "distant", "override": "long-term disease (S-163, S-126)" },
+    { "hazard": "isolation_confinement", "indicator": "heart_rate", "arrows": 3, "path": ["Isolation and Confinement", "Stress", "Inflammation", "Cardiac Structure/Function"], "diagram": "S-153", "closeness": "intermediate" },
+    { "hazard": "hostile_closed_environment", "indicator": "heart_rate", "arrows": 4, "path": ["Hostile Closed Environment", "Atmospheric Conditions", "CO2 (Risk)", "Inflammation", "Cardiac Structure/Function"], "diagram": "S-153", "closeness": "distant" },
+    { "hazard": "distance_from_earth", "indicator": "heart_rate", "arrows": 4, "path": ["Distance from Earth", "Vehicle Design", "Crew Health and Performance System", "Exercise", "Intravascular Volume"], "diagram": "S-153", "closeness": "distant" },
+
+    { "hazard": "altered_gravity", "indicator": "blood_pressure", "arrows": 2, "path": ["Altered Gravity", "Fluid Shifts", "Intravascular Volume"], "diagram": "S-153", "closeness": "close" },
+    { "hazard": "radiation", "indicator": "blood_pressure", "arrows": 2, "path": ["Radiation", "Oxidative Stress", "Vascular Structure/Function"], "diagram": "S-153", "closeness": "distant", "override": "long-term disease (S-163, S-126)" },
+    { "hazard": "isolation_confinement", "indicator": "blood_pressure", "arrows": 3, "path": ["Isolation and Confinement", "Stress", "Inflammation", "Cardiac Structure/Function"], "diagram": "S-153", "closeness": "intermediate" },
+    { "hazard": "hostile_closed_environment", "indicator": "blood_pressure", "arrows": 4, "path": ["Hostile Closed Environment", "Atmospheric Conditions", "CO2 (Risk)", "Inflammation", "Cardiac Structure/Function"], "diagram": "S-153", "closeness": "distant" },
+    { "hazard": "distance_from_earth", "indicator": "blood_pressure", "arrows": 4, "path": ["Distance from Earth", "Vehicle Design", "Crew Health and Performance System", "Exercise", "Intravascular Volume"], "diagram": "S-153", "closeness": "distant" },
+
+    { "hazard": "radiation", "indicator": "blood_sugar", "arrows": 1, "path": ["Radiation", "Nutrients"], "diagram": "S-158", "edge_note": "NASA file labels this arrow 'loe 3' (see S-151)", "closeness": "distant", "override": "observability low" },
+    { "hazard": "hostile_closed_environment", "indicator": "blood_sugar", "arrows": 2, "path": ["Hostile Closed Environment", "Food Storage Conditions", "Nutrients"], "diagram": "S-158", "closeness": "distant", "override": "observability low" },
+    { "hazard": "altered_gravity", "indicator": "blood_sugar", "arrows": 3, "path": ["Altered Gravity", "Food System", "Food Production", "Nutrients"], "diagram": "S-158", "closeness": "distant", "override": "observability low" },
+    { "hazard": "distance_from_earth", "indicator": "blood_sugar", "arrows": 4, "path": ["Distance from Earth", "Resupply", "Food System", "Food Production", "Nutrients"], "diagram": "S-158", "closeness": "distant" },
+    { "hazard": "isolation_confinement", "indicator": "blood_sugar", "arrows": null, "path": [], "diagram": "S-158", "closeness": "not_linked", "note": "not a node in S-158" },
+
+    { "hazard": "hostile_closed_environment", "indicator": "body_temperature", "arrows": 2, "path": ["Hostile Closed Environment", "Air Contamination", "Infection"], "diagram": "S-156", "closeness": "close", "note": "seven two-arrow chains to Infection" },
+    { "hazard": "altered_gravity", "indicator": "body_temperature", "arrows": 2, "path": ["Altered Gravity", "Microbial Virulence Factors", "Infection"], "diagram": "S-156", "closeness": "close" },
+    { "hazard": "isolation_confinement", "indicator": "body_temperature", "arrows": 2, "path": ["Isolation and Confinement", "Microbiome", "Infection"], "diagram": "S-156", "closeness": "close" },
+    { "hazard": "radiation", "indicator": "body_temperature", "arrows": 3, "path": ["Radiation", "Oxidative Stress", "Inflammation", "Medical Illness"], "diagram": "S-155", "closeness": "intermediate", "note": "radiation is not a node in S-156" },
+    { "hazard": "distance_from_earth", "indicator": "body_temperature", "arrows": 4, "path": ["Distance from Earth", "Vehicle Design", "Crew Health and Performance System", "Medical Treatment Capability", "Infection"], "diagram": "S-156", "closeness": "distant" },
+
+    { "hazard": "radiation", "indicator": "sleep_hours", "arrows": 1, "path": ["Radiation", "Sleep Deficiencies"], "diagram": "S-154", "closeness": "close" },
+    { "hazard": "altered_gravity", "indicator": "sleep_hours", "arrows": 2, "path": ["Altered Gravity", "Stress", "Sleep Deficiencies"], "diagram": "S-154", "closeness": "close" },
+    { "hazard": "isolation_confinement", "indicator": "sleep_hours", "arrows": 2, "path": ["Isolation and Confinement", "Stress", "Sleep Deficiencies"], "diagram": "S-154", "closeness": "close" },
+    { "hazard": "hostile_closed_environment", "indicator": "sleep_hours", "arrows": 2, "path": ["Hostile Closed Environment", "Stress", "Sleep Deficiencies"], "diagram": "S-154", "closeness": "close" },
+    { "hazard": "distance_from_earth", "indicator": "sleep_hours", "arrows": 3, "path": ["Distance from Earth", "Vehicle Design", "Environmental Conditions", "Sleep Deficiencies"], "diagram": "S-154", "closeness": "intermediate" },
+
+    { "hazard": "isolation_confinement", "indicator": "mood", "arrows": 1, "path": ["Isolation and Confinement", "Psychological Status"], "diagram": "S-157", "closeness": "close" },
+    { "hazard": "radiation", "indicator": "mood", "arrows": 4, "path": ["Radiation", "Oxidative Stress", "Inflammation", "Central Nervous System Changes", "Psychological Status"], "diagram": "S-157", "closeness": "distant" },
+    { "hazard": "distance_from_earth", "indicator": "mood", "arrows": 4, "path": ["Distance from Earth", "Communication Factors", "Ground Support", "BHP Family Services", "Psychological Status"], "diagram": "S-157", "closeness": "distant" },
+    { "hazard": "altered_gravity", "indicator": "mood", "arrows": null, "path": [], "diagram": "S-157", "closeness": "not_linked", "note": "not a node in S-157; reaches Behavioral (Risk) only through the sleep diagram (S-154)" },
+    { "hazard": "hostile_closed_environment", "indicator": "mood", "arrows": null, "path": [], "diagram": "S-157", "closeness": "not_linked", "note": "not a node in S-157; reaches Behavioral (Risk) only through the sleep diagram (S-154)" }
+  ]
+}
