@@ -390,9 +390,23 @@ test("browser: SYN-B end to end, the hazard panel, and offline after one load", 
     assert.equal(await page.getAttribute('article[data-indicator="body_temperature"] [data-result-status]', "data-result-status"), "contact", "the reading entered offline is still there after a reload");
   });
 
+  await t.test("one reading can be deleted from History, after a second press", async () => {
+    await open("history");
+    const before = Object.keys(await historyStatuses(page));
+    assert.equal(before.length, 185);
+    const mark = before.find((id) => !id.startsWith("sample-"));
+    await page.click(`[data-delete="${mark}"]`);
+    assert.equal(Object.keys(await historyStatuses(page)).length, 185, "nothing is deleted on the first press");
+    await page.click(`[data-delete-yes="${mark}"]`);
+    await page.waitForSelector("[data-flash]");
+    const after = Object.keys(await historyStatuses(page));
+    assert.equal(after.length, 184);
+    assert.ok(!after.includes(mark));
+  });
+
   await t.test("reset, still offline: every reading is wiped and the clean sample is back", async () => {
     await open("astronaut");
-    assert.equal(await page.getAttribute("[data-reading-count]", "data-reading-count"), "185");
+    assert.equal(await page.getAttribute("[data-reading-count]", "data-reading-count"), "184");
     await page.click("[data-reset]");
     await page.click("[data-reset-yes]");
     await page.waitForSelector('[data-reading-count="180"]');
@@ -409,6 +423,50 @@ test("browser: SYN-B end to end, the hazard panel, and offline after one load", 
     assert.deepEqual(server.requests.filter((url) => !url.startsWith("/app/")), [], "the server was asked only for files of the app");
     assert.deepEqual(log.errors, []);
   });
+});
+
+test("browser: a new version of the app replaces the saved copy on the next online visit", { skip, timeout: 120000 }, async (t) => {
+  const { cpSync, mkdtempSync, rmSync, writeFileSync } = await import("node:fs");
+  const { tmpdir } = await import("node:os");
+  const { join } = await import("node:path");
+  const { currentBlock, stampBlock } = await import("../tools/stamp_sw.mjs");
+  const { APP } = await import("./helpers/files.js");
+  const root = mkdtempSync(join(tmpdir(), "stellavita-update-"));
+  cpSync(APP, join(root, "app"), { recursive: true });
+  const server = await startServer(root);
+  const { context, page } = await newPage(server);
+  t.after(async () => {
+    await context.close();
+    await server.close();
+    rmSync(root, { recursive: true, force: true });
+  });
+  const cacheNames = () => page.evaluate(() => caches.keys());
+
+  await page.goto(server.appUrl);
+  await page.waitForSelector("html[data-offline-ready]");
+  await page.waitForFunction(() => navigator.serviceWorker.controller !== null);
+  const [first] = await cacheNames();
+  assert.equal((await page.textContent("h1")).trim(), "StellaVita");
+
+  // Change a file of the app and stamp the service worker, as `npm run build` does.
+  const index = join(root, "app", "index.html");
+  writeFileSync(index, readFileSync(index, "utf8").replace(">StellaVita</h1>", ">StellaVita (updated)</h1>"));
+  const worker = join(root, "app", "sw.js");
+  const source = readFileSync(worker, "utf8");
+  writeFileSync(worker, source.replace(currentBlock(source), stampBlock(join(root, "app"))));
+
+  await page.reload();
+  let names = await cacheNames();
+  for (let tries = 0; tries < 100 && !(names.length === 1 && names[0] !== first); tries += 1) {
+    await page.waitForTimeout(100);
+    names = await cacheNames();
+  }
+  const [second] = names;
+  assert.equal(names.length, 1);
+  assert.notEqual(second, first, "the old saved copy was removed and the new one kept");
+  await page.reload();
+  await page.waitForSelector("html[data-app-ready]");
+  assert.equal((await page.textContent("h1")).trim(), "StellaVita (updated)");
 });
 
 test.after(async () => {
