@@ -287,7 +287,8 @@ Log a library only once the team actually uses it in the build (from Nov 14, 202
 
 | ID | Name and version | Publisher | Date added | Used for | License | Offline copy | Status |
 |---|---|---|---|---|---|---|---|
-| (none yet) | | | | | | | |
+| L-01 | Tailwind CSS 3.4.17 | Tailwind Labs, Inc. | Nov 15, 2026 | Build time only: compiles `src/input.css` to `app/css/app.css` in the refined build (D-58). The app loads only the compiled file; no CDN and no runtime script | MIT (read from the package's own LICENSE file) | The compiled output is committed (`app/css/app.css`). The tool itself is installed from `package-lock.json` | Logged; in use. Added by the AI assistant in the refined build; team to cross-check |
+| L-02 | Playwright 1.63.0 | Microsoft Corporation | Nov 15, 2026 | Development only: runs the browser test (`tests/e2e.test.js`) and draws the PNG icons. No part of it is in the app | Apache-2.0 (read from the package's own LICENSE file) | Not needed: the test is skipped where it is not installed | Logged; in use. Added by the AI assistant in the refined build; team to cross-check |
 
 ---
 

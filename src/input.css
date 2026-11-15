@@ -1,0 +1,57 @@
+/* StellaVita styles: the Tailwind source. Compile with `npm run build:css`.
+   The colours come from src/theme.json (through tailwind.config.js), so the
+   contrast check in tools/contrast.mjs reads the same values. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    line-height: 1.5;
+  }
+
+  /* Keyboard focus is always visible, on every control. */
+  :focus-visible {
+    outline: 3px solid rgb(var(--sv-focus));
+    outline-offset: 2px;
+  }
+
+  [data-screen-title]:focus-visible {
+    outline-style: dashed;
+  }
+
+  /* A hidden section stays hidden whatever layout class it carries. */
+  [hidden] {
+    display: none !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      scroll-behavior: auto !important;
+      transition: none !important;
+    }
+  }
+}
+
+@layer components {
+  .skip-link {
+    position: absolute;
+    left: 0.5rem;
+    top: -4rem;
+    z-index: 50;
+    border-radius: 0.5rem;
+    background: rgb(var(--sv-card));
+    color: rgb(var(--sv-ink));
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+  }
+
+  .skip-link:focus {
+    top: 0.5rem;
+  }
+}

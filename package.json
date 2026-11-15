@@ -1,0 +1,24 @@
+{
+  "name": "stellavita-refined",
+  "version": "1.0.0",
+  "private": true,
+  "description": "StellaVita (refined build): offline health checks for astronauts, with a hazard panel. Team OrbitNsukka. AI-generated (D-44): written by an AI assistant (Claude, Anthropic) at the team leader's direction.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "author": "OrbitNsukka",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test",
+    "build:css": "tailwindcss -c tailwind.config.js -i src/input.css -o app/css/app.css --minify",
+    "stamp": "node tools/stamp_sw.mjs",
+    "build": "npm run build:css && npm run stamp",
+    "contrast": "node tools/contrast.mjs",
+    "check": "python reference/check.py"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0",
+    "tailwindcss": "3.4.17"
+  }
+}

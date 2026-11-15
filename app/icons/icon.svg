@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="StellaVita">
+  <title>StellaVita</title>
+  <desc>The team's own icon: a four-point star above a pulse line, on a dark rounded square. AI-generated (D-44) for team OrbitNsukka. No agency marks.</desc>
+  <rect width="512" height="512" rx="96" fill="#0f172a"/>
+  <path d="M256 92 C268 170 290 192 368 204 C290 216 268 238 256 316 C244 238 222 216 144 204 C222 192 244 170 256 92 Z" fill="#fbbf24"/>
+  <path d="M104 372 H196 L224 328 L262 420 L294 348 L312 372 H408" fill="none" stroke="#86efac" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
