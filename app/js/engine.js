@@ -26,6 +26,13 @@ export const PROBLEMS = Object.freeze({
   contextRefused: "context_refused",
 });
 
+export const PATTERN_TESTS = Object.freeze({
+  atMost: "at_most",
+  atLeast: "at_least",
+  stage2: "stage2",
+  stage2Persistent: "stage2_persistent",
+});
+
 // Two reasons are set by the brief (section 6, rules 8 and 9) and have no field in the file.
 export const FIXED_REASONS = Object.freeze({
   trendOnly: "trend only",
@@ -328,12 +335,12 @@ function meetsPattern(indicator, rule, reading) {
   const measured = measure(indicator, reading);
   if (!measured || measured.kind === KINDS.phq2) return false;
   switch (rule.test) {
-    case "stage2":
-    case "stage2_persistent":
+    case PATTERN_TESTS.stage2:
+    case PATTERN_TESTS.stage2Persistent:
       return Boolean(measured.parts) && measured.parts.some((part) => measured.values[part] >= rule[`${part}_min`]);
-    case "at_most":
+    case PATTERN_TESTS.atMost:
       return !measured.parts && measured.value <= rule.value;
-    case "at_least":
+    case PATTERN_TESTS.atLeast:
       return !measured.parts && measured.value >= rule.value;
     default:
       return false;
@@ -349,7 +356,7 @@ export function patternFires(indicator, rule, reading, earlier) {
   for (const other of earlier) {
     if (meetsPattern(indicator, rule, other)) metDays.add(dayNumber(other.date));
   }
-  if (rule.test === "stage2_persistent") {
+  if (rule.test === PATTERN_TESTS.stage2Persistent) {
     for (const day of metDays) {
       const gap = today - day;
       if (gap >= rule.gap_days_at_least && gap <= rule.lookback_days) return true;
