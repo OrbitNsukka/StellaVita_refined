@@ -12,6 +12,7 @@
   "scripts": {
     "test": "node --test",
     "build:css": "tailwindcss -c tailwind.config.js -i src/input.css -o app/css/app.css --minify",
+    "contrast": "node tools/contrast.mjs",
     "check": "python reference/check.py"
   },
   "devDependencies": {

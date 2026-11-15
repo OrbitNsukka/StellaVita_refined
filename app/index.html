@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StellaVita</title>
+  <meta name="description" content="StellaVita: offline health checks for astronauts, with the reasons each reading is watched. Synthetic data only. Guidance only, not a diagnosis.">
+  <meta name="generator" content="Written by an AI assistant (Claude, Anthropic) at the direction of team OrbitNsukka's leader. No site generator or framework.">
+  <meta name="ai-disclosure" content="AI-generated (D-44): this app, its synthetic data and its documents were written by an AI assistant (Claude, Anthropic) at the team leader's direction.">
+  <meta name="author" content="OrbitNsukka">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="css/app.css">
+  <script type="module" src="js/ui.js"></script>
+</head>
+<body class="min-h-screen bg-page font-sans text-ink antialiased">
+  <a class="skip-link" href="#main">Skip to the content</a>
+  <header class="bg-banner text-onbanner">
+    <div class="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 py-3">
+      <div class="flex items-center gap-3">
+        <img src="icons/icon.svg" alt="" width="36" height="36" class="h-9 w-9 rounded-lg">
+        <div>
+          <h1 class="text-xl font-bold tracking-tight">StellaVita</h1>
+          <p class="text-sm">Offline health checks for astronauts</p>
+        </div>
+      </div>
+      <p class="text-sm font-semibold" id="who" aria-live="polite"></p>
+    </div>
+  </header>
+  <nav id="nav" aria-label="Screens" class="mx-auto max-w-3xl px-4 pt-4" hidden></nav>
+  <main id="main" tabindex="-1" class="mx-auto max-w-3xl px-4 pb-32 pt-4 outline-none">
+    <p id="boot">Loading…</p>
+    <noscript>
+      <p>StellaVita needs JavaScript to work. It runs entirely on this device and sends nothing anywhere.</p>
+    </noscript>
+  </main>
+  <footer class="fixed inset-x-0 bottom-0 border-t border-line bg-banner text-onbanner">
+    <p class="mx-auto max-w-3xl px-4 py-2 text-sm font-semibold" id="limits-line" role="note">Guidance only — not a diagnosis. Red reading, symptom or worry? Contact the flight surgeon.</p>
+  </footer>
+</body>
+</html>
