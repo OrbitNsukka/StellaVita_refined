@@ -42,7 +42,7 @@ test("the fixed inputs are the versions the briefs name", () => {
 function builtFiles() {
   const folders = ["app/css", "app/js", "app/icons", "src", "tools", "tests"];
   const single = ["app/index.html", "app/sw.js", "app/manifest.webmanifest", "README.md", "NOTICE", "package.json", "tailwind.config.js", ".gitignore",
-    "docs/AI_USE.md", "docs/BUILD_REPORT.md", "docs/DATA_MODEL.md", "docs/HAZARD_PANEL.md", "docs/ISSUES.md", "docs/STATUS_RULES.md", "docs/TECH_NOTES.md"];
+    "docs/NASA_Sources.md", "docs/AI_USE.md", "docs/BUILD_REPORT.md", "docs/DATA_MODEL.md", "docs/HAZARD_PANEL.md", "docs/ISSUES.md", "docs/STATUS_RULES.md", "docs/TECH_NOTES.md"];
   const files = folders.flatMap((folder) => listFiles(join(ROOT, folder))).map(relativeToRoot);
   return [...files, ...single].filter((file) => !/\.png$/.test(file) && !file.startsWith("tests/expected_colours"));
 }

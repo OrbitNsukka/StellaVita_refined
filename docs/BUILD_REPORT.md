@@ -10,14 +10,14 @@
 The refined build is complete: the six indicators and the hazard panel work end to end, offline, with reset and export.
 
 - **Every row of the acceptance table passes** (section 3).
-- **All automatic checks pass.** `npm test`: 179 tests, 179 pass, 0 fail, 0 skipped. `python reference/check.py` passes. `python reference/tools/expected_colours.py --verify` reports "up to date".
+- **All automatic checks pass.** `npm test`: 185 tests, 185 pass, 0 fail, 0 skipped. `python reference/check.py` passes. `python reference/tools/expected_colours.py --verify` reports "up to date".
 - **The engine matches the reference checker on 720 of 720 statuses.** Red appears only on SYN-B day 14 (sleep), SYN-C day 18 (temperature) and SYN-D day 22 (blood sugar).
 - **The hazard panel shows all 30 links** of `Hazard_Links.json`, and never changes a status.
 - **The fixed inputs are unchanged.** Nothing in `app/data/`, `reference/` or the expected statuses was edited. No threshold and no rating was changed.
 - **The browser test ran**, in Chromium. It was not skipped.
-- **A fresh clone was checked:** after `npm ci`, the same 179 tests pass.
+- **A fresh clone was checked:** after `npm ci`, the same tests pass.
 - **Not tested:** any browser other than Chromium, a real phone, GitHub Pages, a screen reader, and review by people. See section 4.
-- **Nobody could be asked during the build.** Where the briefs were unclear the build chose, and wrote the choice down. `docs/ISSUES.md` records 58 points in all; the 14 choices that most need confirming are in section 6.
+- **Nobody could be asked during the build.** Where the briefs were unclear the build chose, and wrote the choice down. `docs/ISSUES.md` records 60 points in all; the 14 choices that most need confirming are in section 6.
 
 All work is on the branch `claude/stoic-maxwell-ykss9q`, one commit per step of the refined brief's section 6, with a draft pull request into `main`. Nothing was merged.
 
@@ -59,7 +59,7 @@ All work is on the branch `claude/stoic-maxwell-ykss9q`, one commit per step of 
 |---|---|
 | `python reference/check.py` | Passes: no gaps, no impossible readings, red only on the three scripted days |
 | `python reference/tools/expected_colours.py --verify` | "expected_colours.csv is up to date" |
-| `npm test` | 179 tests, 179 pass, 0 fail, 0 skipped |
+| `npm test` | 185 tests, 185 pass, 0 fail, 0 skipped |
 
 ### 3.3 Other things that were checked
 
@@ -75,6 +75,7 @@ All work is on the branch `claude/stoic-maxwell-ykss9q`, one commit per step of 
 - **No outside request:** the browser test sends everything that is not for the test server through a stand-in proxy. The proxy first proves it can see such a request, then sees none from the app, including from the service worker.
 - **Export:** JSON and CSV download for the chosen astronaut; the browser test reads the files back and confirms that no request was made.
 - **No personal information, no agency branding:** a test scans everything the build wrote for e-mail addresses, phone numbers and initials, and checks that the only images in the repository are the team's own icon files.
+- **NASA sources (added Nov 16):** `docs/NASA_Sources.md` states every NASA resource the project uses, and how: 15 are cited by a file the app reads (8 of them shown on screen), 23 by the documents behind it, 8 are the challenge and reuse rules, and 42 are logged but not used. A test keeps the page in step with `docs/Sources.md` and with the app's data (`tests/sources.test.js`).
 - **Commit identity:** every commit is by "OrbitNsukka" with the no-reply address, and carries the AI co-author line.
 
 ## 4. What was not tested, and what could not be verified
@@ -97,7 +98,7 @@ Stated plainly, so nobody assumes more than was checked.
 | **The browser's own update check of `sw.js`** | When online, the browser asks the app's own address whether `sw.js` changed. The app cannot stop this. It goes to no other site and carries no data | None; recorded in `TECH_NOTES.md` |
 | **The exported CSV in a spreadsheet program** | Only read back by the tests | Open one export |
 | **Windows, and Node versions other than 22** | The checks ran on Linux with Node 22 and Python 3.13 only. `package.json` asks for Node 20 or later | Run `npm test` on the team's laptop |
-| **`npm test` on a machine with nothing installed** | Tried on a fresh clone in the cloud session, before `npm install`: 178 pass and 1 is skipped with a message (the CSS rebuild check). The browser test still ran there, because that machine has Playwright installed machine-wide. With Playwright hidden, the browser test was skipped cleanly with a message. A machine with neither was not available | Run `npm test` on the team's laptop before and after `npm install` |
+| **`npm test` on a machine with nothing installed** | Tried on a fresh clone in the cloud session, before `npm install`: all but one pass and 1 is skipped with a message (the CSS rebuild check). The browser test still ran there, because that machine has Playwright installed machine-wide. With Playwright hidden, the browser test was skipped cleanly with a message. A machine with neither was not available | Run `npm test` on the team's laptop before and after `npm install` |
 
 **About the browser test.** `tests/e2e.test.js` needs Playwright with Chromium, a development tool that is not part of the app. In the cloud session Chromium was already installed, and Playwright was installed with `npm install` at the matching version (1.63.0). Where Playwright or its browser is missing, the two browser tests are skipped with a message, and the workability, offline and on-screen rows above then have no automatic check on that machine.
 
@@ -149,6 +150,7 @@ Nobody could be asked, so each of these is the choice closest to the briefs. **P
 | R-30 | The Indicator Sheet's action texts are not in a file the screens may copy from | Data & Science, Interface |
 | R-31 | The limits statement says never to say "this is normal for you"; the guidance says "That is your normal" and the status word is "Normal" | Data & Science, Interface |
 | R-52 | Team documents and two data files name workstream leads by initials | Project & Delivery |
+| R-59 | Six NASA diagram sources shown in the panel, and seven more cited by the hazard file, are still Logged in `docs/Sources.md`; only S-31 and S-32 are Verified | Data & Science, Project & Delivery |
 
 ## 8. How to check this report yourself
 
